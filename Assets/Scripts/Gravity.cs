@@ -4,45 +4,56 @@ using UnityEngine;
 
 public class Gravity : MonoBehaviour
 {
-    public GameObject otherBody;
-    public float F = 0;
+    private List<GameObject> celestialBodies;
+    public float netForce = 0;
     public float G = 6.674f * Mathf.Pow(10f, -11f);
-    public float m1 = 1f;
-    public float m2 = 1f;
-    public Vector3 rVector;
-    public float r = 0f;    
-    public float a = 0f;
-    public float v = 0f;
-    public float d = 0f;
+    public float mass = 1f;
+    public Vector3 netDisplacement;
+    public float netAcceleration = 0f;
+    public float netVelocity = 0f;
 
 
     void Start()
     {
-        Debug.DrawLine(transform.position, otherBody.transform.position, Color.green, float.PositiveInfinity);
+        celestialBodies = new List<GameObject>(GameObject.FindGameObjectsWithTag("CelestialBody"));
+        celestialBodies.Remove(gameObject);
     }
     
     void Update()
     {
-        //Radius
-        rVector = otherBody.transform.position - transform.position;
-        r = rVector.magnitude;
+        netDisplacement = new Vector3(0, 0, 0);
 
-        //Newton's law of universal gravitation
-        F = G * ((m1 * m2)/Mathf.Pow(r, 2));
+        foreach (GameObject celestialBody in celestialBodies)
+        {
+            //Distance between bodies
+            var rVector = celestialBody.transform.position - transform.position;
+            var r = rVector.magnitude;
 
-        //Newton's second law
-        a = F/m1;
+            //Newton's law of universal gravitation
+            var F = G * ((mass * celestialBody.GetComponent<Gravity>().mass)/Mathf.Pow(r, 2));
 
-        //Calculate v with current acceleration for the amount of time at that acceleration (since last frame of time sample)
-        v = a * Time.deltaTime;
+            //Newton's second law
+            var a = F/mass;
 
-        //Get displacement
-        d = v * Time.deltaTime;
+            //Calculate v with current acceleration for the amount of time at that acceleration (since last frame of time sample)
+            var v = a * Time.deltaTime;
+
+            //Get displacement
+            var d = v * Time.deltaTime;
+
+            //Displacemnt caused by this celestialBody
+            netDisplacement += rVector * d;
+
+            //Draw line
+            Debug.DrawLine(transform.position, celestialBody.transform.position, Color.red);
+        }
 
         //Move body by the displacement
-        transform.position += rVector * d;
+        transform.position += netDisplacement;
 
-        //Draw line
-        Debug.DrawLine(transform.position, otherBody.transform.position, Color.red);
+        //Calculating net Variables
+        netVelocity = netDisplacement.magnitude/Time.deltaTime;
+        netAcceleration = netVelocity/Time.deltaTime;
+        netForce = netAcceleration * mass;
     }
 }
