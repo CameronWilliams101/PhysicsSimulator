@@ -485,7 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9495626acd735d849aa80753a35c9cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 5
+  mouseSpeed: 2
 --- !u!1 &1035537239
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,6 +893,8 @@ MonoBehaviour:
   netDisplacement: {x: 0, y: 0, z: 0}
   netAcceleration: 0
   netVelocity: 0
+  initialVelocity: 0
+  velocityVector: {x: 0, y: 0, z: 0}
 --- !u!135 &1579583678
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1007,6 +1010,8 @@ MonoBehaviour:
   netDisplacement: {x: 0, y: 0, z: 0}
   netAcceleration: 0
   netVelocity: 0
+  initialVelocity: 0
+  velocityVector: {x: 0, y: 0, z: 0}
 --- !u!135 &1630832735
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1124,6 +1129,8 @@ MonoBehaviour:
   netDisplacement: {x: 0, y: 0, z: 0}
   netAcceleration: 0
   netVelocity: 0
+  initialVelocity: 0
+  velocityVector: {x: 0, y: 0, z: 0}
 --- !u!135 &1758043751
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1316,6 +1323,8 @@ MonoBehaviour:
   netDisplacement: {x: 0, y: 0, z: 0}
   netAcceleration: 0
   netVelocity: 0
+  initialVelocity: 1.5
+  velocityVector: {x: 0, y: 0, z: 0}
 --- !u!1 &2019699150
 GameObject:
   m_ObjectHideFlags: 0

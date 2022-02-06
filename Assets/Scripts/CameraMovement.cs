@@ -5,6 +5,8 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public float speed = 10f;
+    private Vector2 rotation = Vector2.zero;
+	public float mouseSpeed = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -15,12 +17,15 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Movement
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
-        float zoomIn = Input.GetAxis("Fire1");
-        float zoomOut = Input.GetAxis("Fire2");
+        transform.Translate(horizontal*speed, 0, vertical*speed);
 
-        transform.position += new Vector3(horizontal*speed, 0, vertical*speed);
-        transform.Translate(0, 0, (zoomIn - zoomOut)*speed/4);
+        //Mouse look
+        rotation.y += Input.GetAxis ("Mouse X");
+		rotation.x += -Input.GetAxis ("Mouse Y");
+		transform.eulerAngles = (Vector2)rotation * mouseSpeed;
+
     }
 }

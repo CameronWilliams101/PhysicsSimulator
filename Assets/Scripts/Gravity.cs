@@ -11,6 +11,8 @@ public class Gravity : MonoBehaviour
     public Vector3 netDisplacement;
     public float netAcceleration = 0f;
     public float netVelocity = 0f;
+    public float initialVelocity = 0f;
+    public Vector3 velocityVector;
 
 
     void Start()
@@ -47,6 +49,10 @@ public class Gravity : MonoBehaviour
             //Draw line
             Debug.DrawLine(transform.position, celestialBody.transform.position, Color.red);
         }
+
+        //Introduce initial velocity
+        velocityVector = new Vector3(0, 0, 1 * initialVelocity);
+        netDisplacement += velocityVector * Time.deltaTime;
 
         //Move body by the displacement
         transform.position += netDisplacement;
